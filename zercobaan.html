@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kalkulator Energi Kinetik & Potensial</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f0f4ff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-top: 60px;
+      width: 360px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #0d6efd;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px 10px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      background: #0d6efd;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #0b5ed7;
+    }
+
+    .result {
+      margin-top: 18px;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      color: #333;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .result span {
+      display: block;
+      margin-top: 6px;
+      font-weight: 600;
+      color: #0d6efd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Kalkulator Energi</h2>
+
+    <label for="massa">Massa (kg)</label>
+    <input type="number" id="massa" placeholder="contoh: 10" />
+
+    <label for="kecepatan">Kecepatan (m/s)</label>
+    <input type="number" id="kecepatan" placeholder="contoh: 5" />
+
+    <label for="tinggi">Tinggi (m)</label>
+    <input type="number" id="tinggi" placeholder="contoh: 2" />
+
+    <label for="gravitasi">Gravitasi (m/s²)</label>
+    <select id="gravitasi">
+      <option value="">-- Pilih gravitasi --</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9.8">9.8 (Bumi)</option>
+      <option value="10">10</option>
+      <option value="12">12</option>
+      <option value="15">15</option>
+    </select>
+
+    <button onclick="hitungEnergi()">Hitung Energi</button>
+
+    <div class="result" id="hasil">
+      Masukkan nilai untuk menghitung energi kinetik dan potensial.
+    </div>
+  </div>
+
+  <script>
+    function hitungEnergi() {
+      const m = parseFloat(document.getElementById("massa").value);
+      const v = parseFloat(document.getElementById("kecepatan").value);
+      const h = parseFloat(document.getElementById("tinggi").value);
+      const g = parseFloat(document.getElementById("gravitasi").value);
+      const hasil = document.getElementById("hasil");
+
+      if (isNaN(m) || isNaN(v) || isNaN(h) || isNaN(g)) {
+        hasil.innerHTML = "⚠️ Mohon isi semua kolom dengan benar.";
+        return;
+      }
+
+      // Rumus dasar
+      const Ekinetik = 0.5 * m * v * v;
+      const Epotensial = m * g * h;
+
+      hasil.innerHTML = `
+        <strong>Hasil Perhitungan:</strong>
+        <span>Energi Kinetik (Ek) = ${Ekinetik.toFixed(2)} Joule</span>
+        <span>Energi Potensial (Ep) = ${Epotensial.toFixed(2)} Joule</span>
+        <span>Total Energi = ${(Ekinetik + Epotensial).toFixed(2)} Joule</span>
+      `;
+    }
+  </script>
+</body>
+</html>

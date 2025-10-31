@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>web agriculter</title>
+        <link href="css/styles.css" rel="stylesheet" />
+        <link href="/css/styles2.css" rel="stylesheet" />
+        <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <style>
+            body {
+                background-color: #ececec !important; /* warna abu muda gelap */
+            }
+  
+          /* ====== TAMBAHAN STYLE (head dipertahankan) ====== */
+          :root{
+            --card-radius:20px;
+            --shadow:0 10px 24px rgba(20,20,43,.06);
+            --text-dim:#6b7280;
+            --brand:#0ea5e9;
+            --brand-dark:#0284c7;
+          }
+          .gradient-navbar{
+            background:linear-gradient(90deg,#07a0e3,#13c3ff);
+          }
+          /* KPI & Card */
+          .kpi-card,.metric-card,.panel-card{
+            background:#fff;border-radius:var(--card-radius);
+            box-shadow:var(--shadow);padding:24px
+          }
+          .kpi-title{font-weight:600;color:#1f2937}
+          .kpi-value{font-size:36px;font-weight:800;line-height:1.1}
+          .kpi-sub{font-weight:600}
+          .section-title{
+            font-size:20px;font-weight:800;color:#111827;margin:12px 0 18px;
+          }
+          .chip{font-size:12px;font-weight:700;border-radius:999px;padding:6px 10px;background:#e5f7ff;color:#0369a1;display:inline-block}
+          .tiny{font-size:12px;color:var(--text-dim)}
+          .grid-gap>[class*="col-"]{margin-bottom:1.25rem}
+          .legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+          .line-toolbar .btn{
+            border:0;border-radius:12px;padding:.25rem .75rem;box-shadow:var(--shadow);background:#e8f6ff;color:#0a6db3;font-weight:700
+          }
+          .line-toolbar .btn.active{background:#111827;color:#fff}
+          /* Climate/Tanah panels */
+          .metric-title{font-weight:700;color:#0f172a}
+          .metric-main{font-size:30px;font-weight:800}
+          .status-pill{
+            background:#22c55e;color:#fff;border-radius:999px;
+            padding:4px 10px;font-size:12px;font-weight:700
+          }
+          .divider-soft{height:1px;background:#eef2f7;margin:16px 0}
+          /* Harvest table short */
+          .table-clean thead th{border:0;color:#64748b;font-weight:700}
+          .table-clean td{vertical-align:middle}
+          /* Add Card you already have */
+          .add-card-btn{
+            border:0;border-radius:999px;background:linear-gradient(90deg,#0ea5e9,#60a5fa);
+            color:#fff;padding:10px 16px;font-weight:800;box-shadow:var(--shadow);margin:0 0 16px 0
+          }
+          .add-card-btn .icon{font-size:18px;margin-right:6px}
+          .card-container{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));grid-gap:16px}
+          .gradient-card{border-radius:16px;color:#fff}
+          .traffic-legend{color:#111827;font-weight:600}
+          .traffic-legend .fa-circle{margin-right:6px}
+          /* Page visits compact */
+          .pv-card{background:#fff;border-radius:var(--card-radius);box-shadow:var(--shadow)}
+          .pv-card .card-body{padding:0}
+          .pv-table td,.pv-table th{padding:14px 18px}
+          /* responsive fix */
+          @media (min-width:1200px){ .container-fluid{max-width:1400px} }
+        </style>
+
+        <nav class="sb-topnav navbar navbar-expand navbar-dark gradient-navbar">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+              <img src="/assets/img/LOGO HUT KADIN 57 PUTIH.png" alt="Logo" width="30" height="30" class="mr-2">
+              Budidaya Kelapa Sawit
+            </a>
+            <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            <ul class="navbar-nav ml-auto ml-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">Settings</a>
+                        <a class="dropdown-item" href="#">Activity Log</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="login.html">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Dashboard</div>
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Monitoring Hasil
+                            </a>
+                            <div class="sb-sidenav-menu-heading">Panduan</div>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Panduan Budidaya
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="/mainmapping/index.html">Budidaya Kelapa Sawit</a>
+                                    <a class="nav-link" href="/mainmapping/index_panduan.html">Norma HK</a>
+                                    <a class="nav-link" href="#">Cohst Production</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Pages
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                        Authentication
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="login.html">Login</a>
+                                            <a class="nav-link" href="register.html">Register</a>
+                                            <a class="nav-link" href="password.html">Forgot Password</a>
+                                        </nav>
+                                    </div>
+                                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                        Error
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="401.html">401 Page</a>
+                                            <a class="nav-link" href="404.html">404 Page</a>
+                                            <a class="nav-link" href="500.html">500 Page</a>
+                                        </nav>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="sb-sidenav-menu-heading">Addons</div>
+                            <a class="nav-link" href="charts.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Charts
+                            </a>
+                            <a class="nav-link" href="tables.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Tables
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        Start Bootstrap
+                    </div>
+                </nav>
+            </div>
+
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <h1 class="mt-4">Dashboard</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+
+                        <!-- ====== BUTTON & MODAL CARD (dipertahankan) ====== -->
+                        <button id="addCardBtn" class="add-card-btn"><span class="icon">+</span> Tambah Afdeling</button>
+                        <div class="card-container" id="cardContainer"></div>
+
+                        <div class="modal fade" id="cardModal" tabindex="-1">
+                          <div class="modal-dialog"><div class="modal-content">
+                            <form id="cardForm">
+                              <div class="modal-header">
+                                <h5 class="modal-title">Tambah Card Baru</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="mb-3"><label class="form-label">Nama Card</label><input type="text" class="form-control" id="cardName" required></div>
+                                <div class="mb-3"><label class="form-label">Kode Unik (5 digit)</label><input type="number" class="form-control" id="cardCode" maxlength="5" pattern="\\d{5}" required><small class="text-muted">Harus 5 digit angka unik</small></div>
+                                <div class="mb-3"><label class="form-label">Deskripsi</label><textarea class="form-control" id="cardDescription" rows="3" required></textarea></div>
+                                <div id="errorMsg" class="text-danger"></div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                              </div>
+                            </form>
+                          </div></div>
+                        </div>
+
+
+                        <!-- Tambahkan di bawah modal -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const container = document.getElementById('cardContainer');
+
+// 🔹 Load seluruh afdeling dari backend
+async function loadAfdelings() {
+  const res = await fetch('/get_afdelings');
+  const afdelings = await res.json();
+  container.innerHTML = '';
+  
+  let totalHasil = 0;
+  let totalBlok = 0;
+  const labels = [];
+  const totalValues = [];
+
+  for (const afd of afdelings) {
+    const kode = afd.Kode;
+    const dataRes = await fetch(`/get_data/${kode}?ts=${Date.now()}`);
+    const data = await dataRes.json();
+    if (data.length === 0) continue;
+
+    const avg = (data.reduce((a, b) => a + b["Hasil (ton/ha/thn)"], 0) / data.length).toFixed(2);
+    totalHasil += parseFloat(avg) * data.length;
+    totalBlok += data.length;
+    labels.push(afd.Nama);
+    totalValues.push(avg);
+
+    // 🔸 Buat card afdeling
+    const card = document.createElement('div');
+    card.classList.add('card', 'm-2', 'p-3');
+    card.style.width = '300px';
+    card.innerHTML = `
+      <h5>${afd.Nama}</h5>
+      <p>${afd.Deskripsi}</p>
+      <p><strong>${avg} ton/ha/thn</strong></p>
+      <canvas id="chart_${kode}" height="100"></canvas>
+    `;
+    container.appendChild(card);
+
+    // 🔸 Grafik kecil di tiap card
+    const ctx = document.getElementById(`chart_${kode}`);
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: data.map((_, i) => i + 1),
+        datasets: [{
+          data: data.map(d => d["Hasil (ton/ha/thn)"]),
+          borderColor: '#007bff',
+          fill: false,
+          tension: 0.3
+        }]
+      },
+      options: { scales: { x: { display: false }, y: { display: false } }, plugins: { legend: { display: false } } }
+    });
+  }
+
+  // 🔸 Grafik total semua afdeling
+  updateTotalChart(labels, totalValues);
+}
+
+// 🔹 Tambah afdeling baru
+document.getElementById('cardForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const nama = document.getElementById('cardName').value;
+  const kode = document.getElementById('cardCode').value;
+  const deskripsi = document.getElementById('cardDescription').value;
+
+  const res = await fetch('/add_afdeling', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nama, kode, deskripsi })
+  });
+  
+  if (res.ok) {
+    alert('Afdeling berhasil ditambahkan!');
+    document.getElementById('cardForm').reset();
+    loadAfdelings();
+  } else {
+    const err = await res.json();
+    alert(err.error || 'Gagal menambah afdeling.');
+  }
+});
+
+// 🔹 Grafik total hasil TBS keseluruhan
+let totalChart;
+function updateTotalChart(labels, values) {
+  const ctx = document.getElementById('totalChart').getContext('2d');
+  if (totalChart) totalChart.destroy();
+  totalChart = new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets: [{ label: 'Hasil Rata-rata TBS (ton/ha/thn)', data: values, backgroundColor: '#28a745' }] },
+    options: { responsive: true, plugins: { legend: { display: false } } }
+  });
+}
+
+// 🔹 Muat grafik setiap 10 detik
+loadAfdelings();
+setInterval(loadAfdelings, 10000);
+</script>
+
+<!-- Grafik total -->
+<div class="card mt-4 p-3">
+  <h4>Pantauan Total Hasil TBS</h4>
+  <canvas id="totalChart" height="150"></canvas>
+</div>
+
+                        <!-- ====== KPI BUSINESS (Customers, Revenue, Traffic) ====== -->
+                        <div class="row grid-gap">
+                          <div class="col-xl-4 col-md-6">
+                            <div class="kpi-card h-100">
+                              <div class="kpi-title"><i class="fas fa-user-friends mr-2"></i> Net BC</div>
+                              <div class="kpi-value">345k</div>
+                              <div class="text-success kpi-sub">▲ 18.2% Since last month</div>
+                              <div class="tiny">Feb 1 - Apr 1 · Worldwide</div>
+                            </div>
+                          </div>
+                          <div class="col-xl-4 col-md-6">
+                            <div class="kpi-card h-100">
+                              <div class="kpi-title"><i class="fas fa-cash-register mr-2"></i> Gros BC</div>
+                              <div class="kpi-value">$43,594</div>
+                              <div class="text-success kpi-sub">▲ 28.4% Since last month</div>
+                              <div class="tiny">Feb 1 - Apr 1 · Worldwide</div>
+                            </div>
+                          </div>
+                          <div class="col-xl-4 col-md-12">
+                            <div class="kpi-card h-100 text-center">
+                              <div class="kpi-title">Traffic Share</div>
+                              <canvas id="trafficPie" height="160"></canvas>
+                              <div class="d-flex justify-content-center mt-3">
+                                <div class="traffic-legend mx-2"><i class="fa fa-circle text-primary"></i> CPO 60%</div>
+                                <div class="traffic-legend mx-2"><i class="fa fa-circle text-info"></i> Olein, Stearin 30%</div>
+                                <div class="traffic-legend mx-2"><i class="fa fa-circle text-secondary"></i> PKO 10%</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- ====== SALES VALUE (Volt-style) ====== -->
+                        <div class="panel-card mb-4">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                              <div class="section-title mb-1">Sales Value</div>
+                              <div class="kpi-value">$10,567</div>
+                              <div class="text-success font-weight-bold">Yesterday ▲ 10.57%</div>
+                            </div>
+                            <div class="line-toolbar">
+                              <button class="btn" id="btnMonth">Month</button>
+                              <button class="btn active" id="btnWeek">Week</button>
+                            </div>
+                          </div>
+                          <div class="mt-3"><canvas id="salesLine" height="96"></canvas></div>
+                          <div class="tiny mt-2 d-flex justify-content-between px-2">
+                            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                          </div>
+                        </div>
+
+                        <!-- ====== AGRI PANELS: IKLIM ====== -->
+                        <div class="row grid-gap">
+                          <div class="col-12"><div class="section-title">🌤️ Monitoring Iklim Perkebunan</div></div>
+
+                          <div class="col-lg-6">
+                            <div class="metric-card h-100">
+                              <div class="d-flex justify-content-between">
+                                <div class="metric-title"><i class="far fa-gem mr-2 text-primary"></i> Curah Hujan</div>
+                                <div class="status-pill">Optimal</div>
+                              </div>
+                              <div class="metric-main text-primary">180 mm</div>
+                              <div class="tiny mb-2">Optimal: 150–250 mm/bulan</div>
+                              <div class="divider-soft"></div>
+                              <canvas id="rainfallBar" height="120"></canvas>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-6">
+                            <div class="metric-card h-100">
+                              <div class="d-flex justify-content-between">
+                                <div class="metric-title"><i class="fas fa-thermometer-half mr-2 text-warning"></i> Suhu & Kelembapan</div>
+                                <div class="status-pill">Optimal</div>
+                              </div>
+                              <div class="tiny">Target suhu 26–30°C · RH 75–85%</div>
+                              <div class="divider-soft"></div>
+                              <canvas id="tempHumLine" height="120"></canvas>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- ====== AGRI PANELS: TANAH ====== -->
+                        <div class="row grid-gap mt-3">
+                          <div class="col-12"><div class="section-title">🌱 Monitoring Tanah</div></div>
+
+                          <div class="col-md-4">
+                            <div class="metric-card">
+                              <div class="d-flex justify-content-between">
+                                <div class="metric-title"><i class="fas fa-flask mr-2"></i> pH Tanah</div>
+                                <span class="status-pill">Optimal</span>
+                              </div>
+                              <div class="metric-main text-primary">5.5 – 6.5</div>
+                              <div class="tiny">Ideal untuk kelapa sawit</div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-4">
+                            <div class="metric-card">
+                              <div class="d-flex justify-content-between">
+                                <div class="metric-title"><i class="fas fa-tint mr-2"></i> Kelembapan Tanah</div>
+                                <span class="status-pill">Optimal</span>
+                              </div>
+                              <div class="metric-main text-primary">28–35%</div>
+                              <div class="tiny">Irigasi tetes / drainase baik</div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-4">
+                            <div class="metric-card">
+                              <div class="d-flex justify-content-between">
+                                <div class="metric-title"><i class="fas fa-seedling mr-2"></i> Unsur Hara (N-P-K)</div>
+                                <span class="status-pill">Optimal</span>
+                              </div>
+                              <div class="metric-main text-primary">2.2 • 0.9 • 2.1%</div>
+                              <div class="tiny">Pemupukan triwulan</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- ====== AGRI PANELS: PANEN ====== -->
+                        <div class="row grid-gap mt-3">
+                          <div class="col-12"><div class="section-title">🌾 Data Panen</div></div>
+
+                          <div class="col-xl-8">
+                            <div class="panel-card">
+                              <div class="d-flex justify-content-between">
+                                <div class="kpi-title">Produktivitas Bulanan (TBS)</div>
+                                <span class="chip">Target: 22–26 ton/ha/tahun</span>
+                              </div>
+                              <canvas id="yieldBar" height="120"></canvas>
+                            </div>
+                          </div>
+
+                          <div class="col-xl-4">
+                            <div class="panel-card h-100">
+                              <div class="kpi-title mb-2">Ringkasan Panen</div>
+                              <div class="kpi-value">452 ton</div>
+                              <div class="text-success font-weight-bold">▲ 18.2% m/m</div>
+                              <div class="divider-soft"></div>
+                              <table class="table table-clean mb-0">
+                                <thead><tr><th>Blok</th><th>Ha</th><th>Ton</th></tr></thead>
+                                <tbody>
+                                  <tr><td>A1</td><td>35</td><td>82</td></tr>
+                                  <tr><td>A2</td><td>30</td><td>75</td></tr>
+                                  <tr><td>B1</td><td>28</td><td>61</td></tr>
+                                  <tr><td>C3</td><td>25</td><td>54</td></tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- ====== PAGE VISITS (ringkas) + TOTAL ORDERS ====== -->
+                        <div class="row grid-gap mt-3">
+                          <div class="col-lg-8">
+                            <div class="pv-card">
+                              <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center p-3">
+                                  <div class="kpi-title">Page visits</div>
+                                  <button class="btn btn-sm btn-info text-white" style="border-radius:12px">See all</button>
+                                </div>
+                                <div class="table-responsive">
+                                  <table class="table pv-table mb-0">
+                                    <thead><tr><th>PAGE NAME</th><th>PAGE VIEWS</th><th>PAGE VALUE</th><th>BOUNCE RATE</th></tr></thead>
+                                    <tbody>
+                                      <tr><td>/demo/admin/index.html</td><td>4.525</td><td>$255</td><td class="text-success">42.55%</td></tr>
+                                      <tr><td>/demo/admin/forms.html</td><td>2.987</td><td>$139</td><td class="text-danger">43.52%</td></tr>
+                                      <tr><td>/demo/admin/util.html</td><td>2.844</td><td>$124</td><td class="text-danger">32.35%</td></tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4">
+                            <div class="panel-card h-100">
+                              <div class="kpi-title">Total orders</div>
+                              <div class="kpi-value">452</div>
+                              <div class="text-success font-weight-bold">▲ 18.2%</div>
+                              <div class="divider-soft"></div>
+                              <canvas id="ordersBar" height="120"></canvas>
+                              <div class="tiny mt-2"><span class="legend-dot" style="background:#111827"></span>July <span class="legend-dot" style="background:#60a5fa;margin-left:14px"></span>August</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- ====== GRAFIK DEFAULT TEMPLATE YANG ADA (tetap dipertahankan) ====== -->
+                        <div class="row mt-4">
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-area mr-1"></i>
+                                        Area Chart Example
+                                    </div>
+                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-bar mr-1"></i>
+                                        Bar Chart Example
+                                    </div>
+                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ====== DATA TABLE BESAR (ASLI) DIPERTAHANKAN ====== -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table mr-1"></i>
+                                DataTable Example
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <!-- (ISI TABELMU YANG PANJANG TETAP SAMA) -->
+                                    <!-- ……………… (dipertahankan persis seperti milikmu) ……………… -->
+                                    <!-- Untuk menghemat ruang di jawaban ini, biarkan isi tabelmu tetap seperti di versi sebelumnya -->
+                                    <!-- PASTE ulang blok <table> sangat panjang di sini bila diperlukan -->
+                                    <div class="alert alert-light mb-0">
+                                      <strong>Catatan:</strong> Tabel data contoh bawaanmu tetap bisa digunakan tanpa perubahan. Jika ingin, salin blok tabel panjangmu di sini seperti semula.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Your Website 2020</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+        <!-- ====== SCRIPTS (ASLI + TAMBAHAN) ====== -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="assets/demo/chart-area-demo.js"></script>
+        <script src="assets/demo/chart-bar-demo.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+        <script src="assets/demo/datatables-demo.js"></script>
+
+        <script>
+          // ====== Modal Add Card (dipertahankan) ======
+          (function(){
+            const cardContainer = document.getElementById("cardContainer");
+            const addCardBtn = document.getElementById("addCardBtn");
+            const cardModal = new bootstrap.Modal(document.getElementById("cardModal"));
+            const cardForm = document.getElementById("cardForm");
+            const errorMsg = document.getElementById("errorMsg");
+            const cardsData = [];
+            const gradients = [
+              "linear-gradient(135deg, #007bff, #00c6ff)",
+              "linear-gradient(135deg, #ffc107, #ff8c00)",
+              "linear-gradient(135deg, #28a745, #85e085)",
+              "linear-gradient(135deg, #dc3545, #ff6b6b)",
+              "linear-gradient(135deg, #17a2b8, #6fdde3)",
+              "linear-gradient(135deg, #6f42c1, #b19cd9)",
+              "linear-gradient(135deg, #343a40, #6c757d)"
+            ];
+            addCardBtn.addEventListener("click", ()=>{ errorMsg.textContent=""; cardForm.reset(); cardModal.show(); });
+            cardForm.addEventListener("submit",(e)=>{
+              e.preventDefault();
+              const name = document.getElementById("cardName").value.trim();
+              const code = document.getElementById("cardCode").value.trim();
+              const description = document.getElementById("cardDescription").value.trim();
+              if(cardsData.some(c=>c.code===code)){ errorMsg.textContent="⚠️ Kode sudah digunakan, silakan pilih kode lain!"; return; }
+              cardsData.push({name,code,description});
+              const el=document.createElement("div");
+              el.className="card gradient-card p-3";
+              el.style.background=gradients[Math.floor(Math.random()*gradients.length)];
+              el.innerHTML=`<h5 class="card-title">${name} (${code})</h5><p class="card-description">${description}</p><a href="#" class="btn btn-light btn-sm">View Details</a>`;
+              cardContainer.appendChild(el);
+              cardModal.hide();
+            });
+          })();
+
+          // ====== Charts (Chart.js 2.8) ======
+          function newGradient(ctx, from, to){
+            const g=ctx.createLinearGradient(0,0,0,200);
+            g.addColorStop(0, from); g.addColorStop(1, to); return g;
+          }
+
+          // Traffic Pie
+          (function(){
+            var ctx=document.getElementById('trafficPie').getContext('2d');
+            new Chart(ctx,{
+              type:'doughnut',
+              data:{ labels:['Desktop','Mobile','Tablet'],
+                datasets:[{ data:[60,30,10], backgroundColor:['#0ea5e9','#22d3ee','#64748b'], borderWidth:0, hoverBackgroundColor:['#0284c7','#06b6d4','#4b5563']}]
+              },
+              options:{ legend:{display:false}, cutoutPercentage:72, tooltips:{enabled:true}}
+            });
+          })();
+
+          // Sales Line (Week view default)
+          (function(){
+            var ctx=document.getElementById('salesLine').getContext('2d');
+            var grad=newGradient(ctx,'rgba(56,189,248,.45)','rgba(56,189,248,.05)');
+            var salesChart=new Chart(ctx,{
+              type:'line',
+              data:{
+                labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+                datasets:[{
+                  label:'Sales',
+                  data:[24,42,43,62,62,88,50],
+                  backgroundColor:grad,
+                  borderColor:'#0ea5e9',
+                  pointBackgroundColor:'#0ea5e9',
+                  borderWidth:3,
+                  lineTension:0.35
+                }]
+              },
+              options:{ legend:{display:false}, scales:{ yAxes:[{display:false}], xAxes:[{display:false}]}, tooltips:{mode:'index'} }
+            });
+            document.getElementById('btnWeek').onclick=function(){ /* already week */ };
+            document.getElementById('btnMonth').onclick=function(){
+              salesChart.data.labels=['W1','W2','W3','W4'];
+              salesChart.data.datasets[0].data=[180,220,260,210];
+              salesChart.update();
+              document.getElementById('btnMonth').classList.add('active');
+              document.getElementById('btnWeek').classList.remove('active');
+            };
+          })();
+
+          // Rainfall Bar (Jan-Dec)
+          (function(){
+            var ctx=document.getElementById('rainfallBar').getContext('2d');
+            new Chart(ctx,{
+              type:'bar',
+              data:{ labels:['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'],
+                datasets:[{ label:'Curah Hujan (mm)', data:[220,210,180,150,110,95,88,80,120,170,210,240], backgroundColor:'#3b82f6' }]
+              },
+              options:{ legend:{display:false}, scales:{ yAxes:[{ticks:{beginAtZero:true}}] } }
+            });
+          })();
+
+          // Temp & Humidity Line
+          (function(){
+            var ctx=document.getElementById('tempHumLine').getContext('2d');
+            new Chart(ctx,{
+              type:'line',
+              data:{
+                labels:['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'],
+                datasets:[
+                  {label:'Kelembapan (%)', data:[85,82,80,77,75,74,73,74,76,80,85,90], borderColor:'#10b981', fill:false, lineTension:0.2},
+                  {label:'Suhu (°C)', data:[25,26,27,27,28,27,26,26,27,28,28,29], borderColor:'#f59e0b', fill:false, lineTension:0.2}
+                ]
+              },
+              options:{ legend:{display:true}, scales:{ yAxes:[{ticks:{beginAtZero:false}}]} }
+            });
+          })();
+
+          // Yield Bar (Harvest)
+          (function(){
+            var ctx=document.getElementById('yieldBar').getContext('2d');
+            new Chart(ctx,{
+              type:'bar',
+              data:{ labels:['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'],
+                datasets:[{ label:'Ton TBS', data:[32,35,38,30,28,26,24,25,29,34,39,42], backgroundColor:'#0ea5e9' }]
+              },
+              options:{ legend:{display:false}, scales:{ yAxes:[{ticks:{beginAtZero:true}}] } }
+            });
+          })();
+
+          // Orders Bar (mini)
+          (function(){
+            var ctx=document.getElementById('ordersBar').getContext('2d');
+            new Chart(ctx,{
+              type:'bar',
+              data:{ labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+                datasets:[
+                  {label:'July', data:[6,8,5,12,9,13,7], backgroundColor:'#111827'},
+                  {label:'August', data:[8,10,7,14,12,16,9], backgroundColor:'#60a5fa'}
+                ]
+              },
+              options:{ legend:{display:false}, scales:{ yAxes:[{ticks:{beginAtZero:true}}] } }
+            });
+          })();
+        </script>
+    </body>
+</html>

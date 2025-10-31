@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Get Started — MyIoT Console</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Optional small favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><circle cx=%2212%22 cy=%2212%22 r=%2210%22 fill=%22%2336b37e%22/></svg>">
+</head>
+<body>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar" aria-label="Sidebar Navigation">
+      <div class="brand">
+        <button id="collapseBtn" class="collapse-btn" aria-pressed="false" title="Collapse sidebar">
+          <!-- menu/chevron icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="#111827" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="brand-info">
+          <div class="logo">MI</div>
+          <div class="brand-text">
+            <div class="app-name">MyIoT</div>
+            <div class="app-tag">Console</div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="nav" role="navigation">
+        <ul>
+          <li><button class="nav-item active" data-page="get-started"><span class="nav-icon">🚀</span> <span class="nav-label">Get Started</span></button></li>
+          <li><button class="nav-item" data-page="dashboards"><span class="nav-icon">📊</span> <span class="nav-label">Dashboards</span></button></li>
+          <li><button class="nav-item" data-page="developer"><span class="nav-icon">🧩</span> <span class="nav-label">Developer Zone</span></button></li>
+          <li><button class="nav-item" data-page="devices"><span class="nav-icon">🔌</span> <span class="nav-label">Devices</span></button></li>
+          <li><button class="nav-item" data-page="automations"><span class="nav-icon">⚙️</span> <span class="nav-label">Automations</span></button></li>
+          <li><button class="nav-item" data-page="users"><span class="nav-icon">👥</span> <span class="nav-label">Users</span></button></li>
+          <li><button class="nav-item" data-page="orgs"><span class="nav-icon">🏢</span> <span class="nav-label">Organizations</span></button></li>
+          <li><button class="nav-item" data-page="locations"><span class="nav-icon">📍</span> <span class="nav-label">Locations</span></button></li>
+          <li><button class="nav-item" data-page="fleet"><span class="nav-icon">🚚</span> <span class="nav-label">Fleet Management</span></button></li>
+          <li><button class="nav-item" data-page="inapp"><span class="nav-icon">✉️</span> <span class="nav-label">In-App Messaging</span></button></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="nav-item ghost" id="collapseToggle"><span class="nav-icon">⬅️</span> <span class="nav-label">Collapse</span></button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <!-- Topbar (progress + optional actions) -->
+      <header class="topbar">
+        <div class="top-left">
+          <h1 class="page-title"><svg class="rocket" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="#36B37E" d="M12 2L15 8l6 3-6 3-3 6-3-6L3 11l6-3 3-6z"/></svg> Get Started With MyIoT</h1>
+          <p class="subtitle">Welcome! Let's connect devices and set up automations.</p>
+        </div>
+
+        <div class="top-right">
+          <div class="onboard-progress" title="Onboarding progress">
+            <div class="progress-label">Onboarding</div>
+            <div class="progress-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80">
+              <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+            <div class="progress-percent" id="progressPercent">0%</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT AREA -->
+      <section class="content" id="content">
+        <!-- Get Started Page -->
+        <article class="page" id="page-get-started" data-page="get-started">
+          <div class="plan-and-cards">
+            <!-- Plan Details -->
+            <aside class="plan-card" aria-label="Plan details">
+              <h3>Plan Details</h3>
+              <ul>
+                <li><strong>Devices:</strong> <span class="muted">2/2</span></li>
+                <li><strong>Templates created:</strong> <span class="muted">2/3</span></li>
+                <li><strong>Team members:</strong> <span class="muted">1/5</span></li>
+              </ul>
+              <hr/>
+              <small class="muted">Upgrade plan to add more devices or team members.</small>
+            </aside>
+
+<!-- Scrollable Cards (horizontal scroll) -->
+<div class="cards-scroll">
+  <!-- Card 1 -->
+  <article class="card" data-action="connect-device" tabindex="0">
+    <div class="card-media">
+      <img src="https://picsum.photos/400/200?random=1" alt="Connect device">
+    </div>
+    <div class="card-body">
+      <h4>How to connect a device to MyIoT</h4>
+      <p class="muted">Scan QR or use provisioning token to onboard a device quickly.</p>
+    </div>
+  </article>
+
+  <!-- Card 2 -->
+  <article class="card" data-action="automations" tabindex="0">
+    <div class="card-media">
+      <img src="https://picsum.photos/400/200?random=2" alt="Automations">
+    </div>
+    <div class="card-body">
+      <h4>No-code automations</h4>
+      <p class="muted">Create triggers and actions with a visual editor.</p>
+      <div class="card-actions">
+        <button class="btn primary small">Try Now</button>
+      </div>
+    </div>
+  </article>
+
+  <!-- Card 3 -->
+  <article class="card" data-action="events" tabindex="0">
+    <div class="card-media">
+      <img src="https://picsum.photos/400/200?random=3" alt="Events">
+    </div>
+    <div class="card-body">
+      <h4>Events, alerts and notifications</h4>
+      <p class="muted">Set thresholds, push notifications and webhooks.</p>
+      <div class="card-actions">
+        <button class="btn ghost small">Learn More</button>
+      </div>
+    </div>
+  </article>
+
+  <!-- Card 4 -->
+  <article class="card" data-action="ota" tabindex="0">
+    <div class="card-media">
+      <img src="https://picsum.photos/400/200?random=4" alt="OTA updates">
+    </div>
+    <div class="card-body">
+      <h4>Over-The-Air updates</h4>
+      <p class="muted">Safely push firmware and track update progress.</p>
+      <div class="card-actions">
+        <button class="btn primary small">Try Now</button>
+      </div>
+    </div>
+  </article>
+
+  <!-- Card 5 -->
+  <article class="card" data-action="white-label" tabindex="0">
+    <div class="card-media">
+      <img src="https://picsum.photos/400/200?random=5" alt="White label">
+    </div>
+    <div class="card-body">
+      <h4>Launch your white-label app</h4>
+      <p class="muted">Custom branding, app store builds and demos.</p>
+      <div class="card-actions">
+        <button class="btn ghost small">Get Started with a Demo</button>
+      </div>
+    </div>
+  </article>
+</div>
+
+
+
+          <!-- Some additional quick links / kicker area -->
+          <div class="helper-grid">
+            <div class="helper">
+              <h5>Quick actions</h5>
+              <ul>
+                <li><button class="link-btn" data-action="devices">Connect a device</button></li>
+                <li><button class="link-btn" data-action="templates">Create a template</button></li>
+                <li><button class="link-btn" data-action="members">Invite team member</button></li>
+              </ul>
+            </div>
+
+            <div class="helper">
+              <h5>Resources</h5>
+              <ul>
+                <li><a href="#" class="muted">Docs & API</a></li>
+                <li><a href="#" class="muted">Support</a></li>
+                <li><a href="#" class="muted">Contact Sales</a></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Placeholder pages for other nav items -->
+        <article class="page hidden" id="page-dashboards" data-page="dashboards">
+          <h2>Dashboards</h2>
+          <p class="muted">This area will show your dashboards. (Contoh konten placeholder)</p>
+        </article>
+
+        <article class="page hidden" id="page-developer" data-page="developer">
+          <h2>Developer Zone</h2>
+          <p class="muted">API keys, SDKs, and developer tools.</p>
+        </article>
+
+        <article class="page hidden" id="page-devices" data-page="devices">
+          <h2>Devices</h2>
+          <p class="muted">Daftar device yang terhubung dan statusnya.</p>
+        </article>
+
+        <article class="page hidden" id="page-automations" data-page="automations">
+          <h2>Automations</h2>
+          <p class="muted">Buat rule & workflows tanpa kode.</p>
+        </article>
+
+        <article class="page hidden" id="page-users" data-page="users">
+          <h2>Users</h2>
+        </article>
+
+        <article class="page hidden" id="page-orgs" data-page="orgs">
+          <h2>Organizations</h2>
+        </article>
+
+        <article class="page hidden" id="page-locations" data-page="locations">
+          <h2>Locations</h2>
+        </article>
+
+        <article class="page hidden" id="page-fleet" data-page="fleet">
+          <h2>Fleet Management</h2>
+        </article>
+
+        <article class="page hidden" id="page-inapp" data-page="inapp">
+          <h2>In-App Messaging</h2>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <small class="muted">© <span id="year"></span> MyIoT — Built with 🔨🤖🔧</small>
+      </footer>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
